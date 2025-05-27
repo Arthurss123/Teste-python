@@ -1,4 +1,4 @@
-# LLM Evaluator
+# LLM
 
 Este é um projeto em Python que compara respostas geradas por dois modelos de linguagem (LLMs): o ChatGPT da OpenAI e um modelo da HuggingFace. A aplicação envia perguntas para os dois modelos, avalia as respostas com base em critérios como similaridade semântica e legibilidade, e exibe a melhor resposta ao usuário.
 
