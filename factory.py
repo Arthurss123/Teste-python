@@ -2,23 +2,24 @@
 from abc import ABC, abstractmethod
 import os
 from openai import OpenAI
-
+import dotenv
 from transformers import pipeline
 
-# Interface base
+# Criando uma interface que obriga toda IA a ter um método chamado get_response
 class LLMClient(ABC):
     @abstractmethod
     def get_response(self, prompt: str) -> str:
         pass
 
-# Implementação do ChatGPT via OpenAI
+#classe para usar o ChatGPT da OpenAI
 class ChatGPT(LLMClient):
     def __init__(self):
-        self.client = OpenAI(api_key="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")
+        self.client = OpenAI(api_key=os.getenv("KEY_API")) # API direta para facilitar o teste
 
     def get_response(self, prompt: str) -> str:
-        try:
-            response = self.client.chat.completions.create(
+        try: 
+            # Envia a pergunta para o modelo e pega a resposta
+            response = self.client.chat.completions.create( 
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "user", "content": prompt}
@@ -29,7 +30,7 @@ class ChatGPT(LLMClient):
         except Exception as e:
             return f"Erro ao acessar a API do ChatGPT: {e}"
 
-# Implementação do HuggingFace QA com contexto fixo
+# Classe para usar um modelo do HuggingFace
 class HuggingFaceLLM(LLMClient):
     def __init__(self):
         self.qa = pipeline("question-answering", model="deepset/roberta-base-squad2")
@@ -46,7 +47,7 @@ class HuggingFaceLLM(LLMClient):
         except Exception as e:
             return f"Erro ao responder com HuggingFace: {e}"
 
-# Fábrica de modelos
+# Classe que funciona como fábrica para criar os modelos de forma automatica
 class LLMFactory:
     @staticmethod
     def create(model_name: str) -> LLMClient:

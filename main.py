@@ -1,4 +1,4 @@
-from factory import ChatGPT
+from factory import ChatGPT, HuggingFaceLLM
 from commands import QueryLLMsCommand
 from strategy import EnhancedEvaluationStrategy
 from observer import ConsoleObserver
@@ -6,25 +6,27 @@ from observer import ConsoleObserver
 def main():
 
 
+    # Um dicionario com os modelos que usamos
     llms = {
         "ChatGPT": ChatGPT(),
+        "HuggingFace": HuggingFaceLLM()
     }
 
     # Criando o observador
     console_observer = ConsoleObserver()
 
-    # Criando a estratégia e adicionando o observador
+    # Cria a estratégia de avaliação e conecta o observador nela
     strategy = EnhancedEvaluationStrategy()
     strategy.add_observer(console_observer)
 
+    #Loop principal do menu
     while True:
-        print("\n=== Menu ===")
-        print("1. Fazer uma pergunta")
+        print("1. Usar a LLM")
         print("2. Sair")
-        choice = input("Escolha uma opção: ")
+        choice = input("Digite sua opção:  ")
 
         if choice == "1":
-            user_prompt = input("\nDigite sua pergunta: ")
+            user_prompt = input("\nFaça sua pergunta ")
 
             command = QueryLLMsCommand(llms, user_prompt)
             responses = command.execute()
