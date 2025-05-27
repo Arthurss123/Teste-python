@@ -2,8 +2,11 @@
 from abc import ABC, abstractmethod
 import os
 from openai import OpenAI
-import dotenv
+from dotenv import load_dotenv
 from transformers import pipeline
+
+
+load_dotenv()
 
 # Criando uma interface que obriga toda IA a ter um método chamado get_response
 class LLMClient(ABC):
@@ -14,7 +17,7 @@ class LLMClient(ABC):
 #classe para usar o ChatGPT da OpenAI
 class ChatGPT(LLMClient):
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("KEY_API")) # API direta para facilitar o teste
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     def get_response(self, prompt: str) -> str:
         try: 
