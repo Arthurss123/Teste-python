@@ -25,14 +25,16 @@ pip install -r requirements.txt
 
 3. Defina sua chave da OpenAI:
 ```bash
-# Windows:
+# API
 set OPENAI_API_KEY=sua-chave-aqui
 
 ## Como usar
 Execute o arquivo principal:
+```
 
 ```bash
 python main.py
+
 ```
 
 ### Funcionalidades:
